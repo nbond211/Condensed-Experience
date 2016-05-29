@@ -36,5 +36,9 @@ def edit_video(videoFileLocation):
 
     final_video.write_videofile(newFileName, fps=25)
 
-edit_video("test.mp4")
+video_file_path = None
 
+while video_file_path is None:
+    video_file_path = easygui.fileopenbox(msg="Choose Video to Condense", title="Experience Condenser", default='*', filetypes=None, multiple=False)
+
+edit_video(video_file_path)
