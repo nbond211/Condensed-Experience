@@ -2,7 +2,7 @@ from random import randint
 import random
 from moviepy.editor import *
 import os
-import easygui
+
 
 def edit_video(videoFileLocation):
     video = VideoFileClip(videoFileLocation)
@@ -32,13 +32,9 @@ def edit_video(videoFileLocation):
 
     final_video = concatenate_videoclips(narrative_array)
 
-    newFileName = os.path.splitext(videoFileLocation)[0] + "_edited" + os.path.splitext(videoFileLocation)[1]
+    new_file_name = os.path.splitext(videoFileLocation)[0] + "_edited" + os.path.splitext(videoFileLocation)[1]
 
-    final_video.write_videofile(newFileName, fps=25)
+    final_video.write_videofile(new_file_name, fps=25)
 
-video_file_path = None
 
-while video_file_path is None:
-    video_file_path = easygui.fileopenbox(msg="Choose Video to Condense", title="Experience Condenser", default='*', filetypes=None, multiple=False)
-
-edit_video(video_file_path)
+edit_video("bug.mp4")
