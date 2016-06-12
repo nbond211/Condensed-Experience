@@ -48,14 +48,16 @@ def edit_video_with_color(videoFileLocation, color):
 
     narrative_array = []
     edit_times_array = []
+    times_seen_array = []
     count = 0
 
-    while count < 1000 and len(edit_times_array) < output_video_duration:
+    while count < 3000 and len(edit_times_array) < output_video_duration:
         rand_time_in_sec = randint(0, input_video_duration - 1)
         print "count: " + str(count)
         print "len: " + str(len(edit_times_array))
+        times_seen_array.append(rand_time_in_sec)
 
-        while rand_time_in_sec in edit_times_array:
+        while rand_time_in_sec in times_seen_array:
             rand_time_in_sec = randint(0, input_video_duration - 1)
 
         if is_color_in_frame(videoFileLocation, rand_time_in_sec, color):
@@ -85,16 +87,16 @@ def is_color_in_frame(video_file_location, time_in_sec, color):
     time_in_ms = time_in_sec * 1000
     vidcap.set(15, time_in_ms)
 
-    os.system("ffmpeg -ss " + str(time_in_sec) + " -i bug.mp4 -t 00:00:1 -r 1 -f singlejpeg frame.jpg -y")
+    os.system("ffmpeg -ss " + str(time_in_sec) + " -i " + video_file_location + " -t 00:00:1 -r 1 -f singlejpeg frame.jpg -y")
     colors = getcolor.get_colors("frame.jpg")
 
     color_in_frame = False
 
     for x in range (0, len(colors)):
         if detectcolor.min_color_diff((colors[x][1][0], colors[x][1][1], colors[x][1][2]))[1] == color:
-            return True
+            color_in_frame = True
 
-        return color_in_frame
+    return color_in_frame
 
 
-edit_video_with_color("bug.mp4", "RED")
+edit_video_with_color("bug.mp4", "YELLOW")
